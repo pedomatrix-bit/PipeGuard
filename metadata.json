@@ -1,0 +1,6 @@
+{
+  "name": "PIPEGUARD",
+  "description": "Low-Cost External Water-Pipe Leak Detection & Localization System for hidden pipeline monitoring and vibration analysis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

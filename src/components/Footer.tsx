@@ -1,0 +1,120 @@
+import React from 'react';
+import { TabType } from '../types';
+import { Droplet, Shield, Award, ArrowUpRight } from 'lucide-react';
+
+interface FooterProps {
+  onSelectTab: (tab: TabType) => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onSelectTab }) => {
+  return (
+    <footer className="bg-slate-900 text-slate-300 border-t border-slate-800 transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
+          {/* Brand & Project Info */}
+          <div className="md:col-span-2 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                <Droplet className="w-5 h-5 fill-cyan-400/20" />
+              </div>
+              <span className="font-display font-bold text-xl tracking-tight text-white">
+                PIPEGUARD
+              </span>
+            </div>
+            <p className="text-sm text-slate-400 max-w-md leading-relaxed">
+              Low-Cost External Water-Pipe Leak Detection & Localization System. Investigating non-invasive vibration and acoustic signature analysis for sustainable municipal water conservation.
+            </p>
+            <div className="flex flex-wrap items-center gap-2 pt-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-slate-800 text-cyan-300 border border-slate-700">
+                <Award className="w-3.5 h-3.5 text-amber-400" />
+                INSPIRE-MANAK Project
+              </span>
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono bg-slate-800 text-slate-400 border border-slate-700">
+                <Shield className="w-3.5 h-3.5 text-emerald-400" />
+                Non-Destructive Sensing
+              </span>
+            </div>
+          </div>
+
+          {/* Site Navigation */}
+          <div>
+            <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400 mb-3">
+              Navigation
+            </h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <button
+                  onClick={() => onSelectTab('home')}
+                  className="text-slate-300 hover:text-cyan-400 transition-colors"
+                >
+                  Home Overview
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onSelectTab('research')}
+                  className="text-slate-300 hover:text-cyan-400 transition-colors"
+                >
+                  Research & Methodology
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onSelectTab('dashboard')}
+                  className="text-slate-300 hover:text-cyan-400 transition-colors font-medium flex items-center gap-1"
+                >
+                  Live Monitor Dashboard
+                  <ArrowUpRight className="w-3.5 h-3.5 text-cyan-400" />
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onSelectTab('team')}
+                  className="text-slate-300 hover:text-cyan-400 transition-colors"
+                >
+                  Creator & Team
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onSelectTab('next')}
+                  className="text-slate-300 hover:text-cyan-400 transition-colors"
+                >
+                  Roadmap: What's Next
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Research Spec Summary */}
+          <div>
+            <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400 mb-3">
+              Research Details
+            </h4>
+            <div className="space-y-2 text-xs font-mono text-slate-400">
+              <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-800">
+                <div className="text-slate-200 font-medium">Affan Adil</div>
+                <div className="text-[11px] text-slate-400">Student Researcher / Innovator</div>
+              </div>
+              <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-800">
+                <div className="text-slate-200 font-medium">Status: Prototype Stage</div>
+                <div className="text-[11px] text-slate-400">Lab loop calibration active</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+          <div>
+            © {new Date().getFullYear()} PIPEGUARD Innovation. Built for INSPIRE-MANAK Water Conservation Initiative.
+          </div>
+          <div className="flex items-center gap-4 font-mono text-[11px]">
+            <span>External Vibration Sensing</span>
+            <span>•</span>
+            <span>Adaptive Baseline Algorithm</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
