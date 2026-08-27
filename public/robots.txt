@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pipeguards.vercel.app/sitemap.xml
+Host: https://pipeguards.vercel.app

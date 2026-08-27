@@ -1,0 +1,18 @@
+{
+  "name": "PIPEGUARD — Acoustic Pipeline Leak Detection System",
+  "short_name": "PipeGuard",
+  "description": "Low-cost external water-pipe leak detection & localization system using piezoelectric vibration signature analysis for INSPIRE-MANAK.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8FAFC",
+  "theme_color": "#0284C7",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["utilities", "education", "science", "productivity"]
+}
