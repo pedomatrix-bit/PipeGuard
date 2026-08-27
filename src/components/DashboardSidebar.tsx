@@ -1,13 +1,13 @@
 import React from 'react';
 import { 
   Compass, 
-  Crosshair,
+  Crosshair, 
   Activity, 
   GitBranch, 
   Zap, 
-  Cpu,
-  Droplet
+  Cpu
 } from 'lucide-react';
+import { PipeGuardLogo } from './PipeGuardLogo';
 
 export type DashboardSection = 
   | 'overview'
@@ -54,9 +54,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
             className="w-full flex items-center gap-3 px-2 text-left cursor-pointer group hover:opacity-90 transition-all"
             title="Return to PipeGuard Home"
           >
-            <div className="w-10 h-10 rounded-xl bg-slate-900 text-sky-400 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform border border-sky-500/20">
-              <Droplet className="w-5 h-5 fill-sky-400/30" />
-            </div>
+            <PipeGuardLogo className="w-10 h-10 group-hover:scale-105 transition-transform" />
             <div>
               <div className="font-display font-bold text-base tracking-tight text-slate-900 leading-tight">
                 PIPEGUARD

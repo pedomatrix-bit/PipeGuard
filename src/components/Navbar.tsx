@@ -1,6 +1,7 @@
 import React from 'react';
 import { TabType, SimulationScenario } from '../types';
-import { Activity, Beaker, Users, LayoutDashboard, ArrowRight, Droplet, Sparkles } from 'lucide-react';
+import { Activity, Beaker, Users, LayoutDashboard, ArrowRight, Sparkles } from 'lucide-react';
+import { PipeGuardLogo } from './PipeGuardLogo';
 
 interface NavbarProps {
   currentTab: TabType;
@@ -39,9 +40,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => onSelectTab('home')}
             className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white shadow-sm transition-transform group-hover:scale-105">
-              <Droplet className="w-5 h-5 text-cyan-400 fill-cyan-400/30" />
-            </div>
+            <PipeGuardLogo className="w-10 h-10 transition-transform group-hover:scale-105" />
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-display font-bold text-xl tracking-tight text-slate-900">

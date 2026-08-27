@@ -3,6 +3,7 @@ import { TabType, SimulationScenario, SensorNode } from '../types';
 import { SYSTEM_INFO, PROBLEM_CARDS, INNOVATION_PILLARS, RESEARCH_OVERVIEW } from '../data/researchData';
 import { PipeDiagram3D } from './PipeDiagram3D';
 import { HowItWorksFlow } from './HowItWorksFlow';
+import { PipeGuardLogo } from './PipeGuardLogo';
 import { 
   ArrowRight, 
   Activity, 
@@ -82,9 +83,12 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
             {/* Main Headline */}
             <div className="space-y-2">
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.1]">
-                PIPEGUARD
-              </h1>
+              <div className="flex items-center gap-4">
+                <PipeGuardLogo className="w-14 h-14 sm:w-16 sm:h-16 shrink-0" />
+                <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.1]">
+                  PIPEGUARD
+                </h1>
+              </div>
               <p className="font-display text-xl sm:text-2xl font-bold text-slate-700 leading-snug">
                 Detect hidden water-pipe leaks before they become major losses.
               </p>
