@@ -197,15 +197,17 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-cyan-500 selection:text-white">
-      {/* Top sticky Navbar */}
-      <Navbar
-        currentTab={currentTab}
-        onSelectTab={handleTabChange}
-        currentScenario={currentScenario}
-      />
+      {/* Top sticky Navbar (Hidden in dashboard for dedicated full-screen control workspace) */}
+      {currentTab !== 'dashboard' && (
+        <Navbar
+          currentTab={currentTab}
+          onSelectTab={handleTabChange}
+          currentScenario={currentScenario}
+        />
+      )}
 
       {/* Main Content Area */}
-      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <main className={`flex-grow w-full ${currentTab === 'dashboard' ? 'w-full' : 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'}`}>
         {currentTab === 'home' && (
           <HomeView
             onSelectTab={handleTabChange}
@@ -230,6 +232,7 @@ export default function App() {
             onSelectSensor={setSelectedSensorId}
             scenario={currentScenario}
             onSelectScenario={setCurrentScenario}
+            onBackToHome={() => handleTabChange('home')}
           />
         )}
 
@@ -238,8 +241,10 @@ export default function App() {
         )}
       </main>
 
-      {/* Site-wide formal academic Footer */}
-      <Footer onSelectTab={handleTabChange} />
+      {/* Site-wide formal academic Footer (Hidden in Dashboard) */}
+      {currentTab !== 'dashboard' && (
+        <Footer onSelectTab={handleTabChange} />
+      )}
     </div>
   );
 }
