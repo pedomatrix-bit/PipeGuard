@@ -36,10 +36,17 @@ export const TeamView: React.FC<TeamViewProps> = ({ onSelectTab }) => {
             <div className="relative group">
               <div className="w-32 h-36 sm:w-36 sm:h-44 rounded-2xl overflow-hidden shadow-2xl border-2 border-cyan-400/40 bg-slate-800 relative">
                 <img 
-                  src="/affan_adil.jpg" 
+                  src="/photo.jpg" 
                   alt="Affan Adil — INSPIRE-MANAK Project Lead & Innovator" 
                   className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
                   referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    // Fallback if photo.jpg is not yet uploaded to public directory
+                    const target = e.currentTarget;
+                    if (!target.src.includes('affan_adil.jpg')) {
+                      target.src = '/affan_adil.jpg';
+                    }
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
               </div>
