@@ -249,6 +249,7 @@ export const TEAM_MEMBERS = [
     program: 'INSPIRE-MANAK Project Lead',
     bio: 'Innovator focused on water conservation, low-cost sensing, embedded systems, and practical municipal infrastructure monitoring.',
     avatarInitials: 'AA',
+    image: '/affan_adil.jpg',
     focus: 'System design, sensor acoustic coupling, firmware algorithm, and experimental testing.',
   },
   {

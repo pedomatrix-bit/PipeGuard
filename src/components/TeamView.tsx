@@ -33,11 +33,17 @@ export const TeamView: React.FC<TeamViewProps> = ({ onSelectTab }) => {
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Creator Avatar & Badge */}
           <div className="lg:col-span-4 flex flex-col items-center sm:items-start text-center sm:text-left space-y-4">
-            <div className="relative">
-              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-gradient-to-tr from-cyan-600 via-blue-600 to-indigo-700 flex items-center justify-center text-3xl sm:text-4xl font-bold text-white shadow-xl border-2 border-cyan-400/40">
-                AA
+            <div className="relative group">
+              <div className="w-32 h-36 sm:w-36 sm:h-44 rounded-2xl overflow-hidden shadow-2xl border-2 border-cyan-400/40 bg-slate-800 relative">
+                <img 
+                  src="/affan_adil.jpg" 
+                  alt="Affan Adil — INSPIRE-MANAK Project Lead & Innovator" 
+                  className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
               </div>
-              <div className="absolute -bottom-2 -right-2 px-2.5 py-1 rounded-full bg-slate-950 text-cyan-300 border border-slate-700 text-[10px] font-mono font-bold flex items-center gap-1">
+              <div className="absolute -bottom-2 -right-2 px-2.5 py-1 rounded-full bg-slate-950 text-cyan-300 border border-slate-700 text-[10px] font-mono font-bold flex items-center gap-1 shadow-md">
                 <Award className="w-3 h-3 text-amber-400" />
                 INSPIRE
               </div>
@@ -125,9 +131,20 @@ export const TeamView: React.FC<TeamViewProps> = ({ onSelectTab }) => {
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center font-mono font-bold text-slate-800 text-sm border border-slate-200">
-                    {member.avatarInitials}
-                  </div>
+                  {'image' in member && member.image ? (
+                    <div className="w-12 h-12 rounded-xl overflow-hidden border-2 border-cyan-500/30 shadow-xs">
+                      <img 
+                        src={member.image} 
+                        alt={member.name}
+                        className="w-full h-full object-cover object-top"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center font-mono font-bold text-slate-800 text-sm border border-slate-200">
+                      {member.avatarInitials}
+                    </div>
+                  )}
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
                     {member.badge}
                   </span>
