@@ -1,7 +1,7 @@
 import React from 'react';
 import { TabType } from '../types';
 import { TEAM_MEMBERS, PROJECT_MOTIVATION } from '../data/researchData';
-import { User, Award, School, Compass, ArrowRight, Droplets, Lightbulb, HeartHandshake, ShieldCheck } from 'lucide-react';
+import { User, Award, ArrowRight, Lightbulb, ShieldCheck, ExternalLink } from 'lucide-react';
 
 interface TeamViewProps {
   onSelectTab: (tab: TabType) => void;
@@ -18,7 +18,7 @@ export const TeamView: React.FC<TeamViewProps> = ({ onSelectTab }) => {
         </div>
 
         <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
-          The Creator &amp; Team
+          The Creator &amp; Mentorship Team
         </h1>
 
         <p className="text-lg sm:text-xl text-slate-600 font-medium">
@@ -34,21 +34,9 @@ export const TeamView: React.FC<TeamViewProps> = ({ onSelectTab }) => {
           {/* Creator Avatar & Badge */}
           <div className="lg:col-span-4 flex flex-col items-center sm:items-start text-center sm:text-left space-y-4">
             <div className="relative group">
-              <div className="w-32 h-36 sm:w-36 sm:h-44 rounded-2xl overflow-hidden shadow-2xl border-2 border-cyan-400/40 bg-slate-800 relative">
-                <img 
-                  src="/photo.jpg" 
-                  alt="Affan Adil — INSPIRE-MANAK Project Lead & Innovator" 
-                  className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
-                  onError={(e) => {
-                    // Fallback if photo.jpg is not yet uploaded to public directory
-                    const target = e.currentTarget;
-                    if (!target.src.includes('affan_adil.jpg')) {
-                      target.src = '/affan_adil.jpg';
-                    }
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
+              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-gradient-to-tr from-cyan-600 via-blue-600 to-indigo-700 flex flex-col items-center justify-center text-white shadow-xl border-2 border-cyan-400/40 relative">
+                <span className="text-3xl sm:text-4xl font-bold font-display tracking-tight">AA</span>
+                <span className="text-[10px] font-mono text-cyan-200 uppercase tracking-widest mt-0.5 font-semibold">Innovator</span>
               </div>
               <div className="absolute -bottom-2 -right-2 px-2.5 py-1 rounded-full bg-slate-950 text-cyan-300 border border-slate-700 text-[10px] font-mono font-bold flex items-center gap-1 shadow-md">
                 <Award className="w-3 h-3 text-amber-400" />
@@ -126,7 +114,7 @@ export const TeamView: React.FC<TeamViewProps> = ({ onSelectTab }) => {
             Team &amp; Academic Support
           </h2>
           <p className="text-slate-600 text-sm max-w-2xl">
-            Mentorship and institutional facilities supporting the iterative fabrication and experimental evaluation of PipeGuard.
+            Mentorship, scientific review, and Atal Tinkering Lab (ATL) facilities supporting the iterative fabrication and experimental evaluation of PipeGuard.
           </p>
         </div>
 
@@ -134,25 +122,16 @@ export const TeamView: React.FC<TeamViewProps> = ({ onSelectTab }) => {
           {TEAM_MEMBERS.map((member) => (
             <div
               key={member.name}
-              className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs flex flex-col justify-between space-y-4 hover:border-slate-300 transition-all"
+              className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs flex flex-col justify-between space-y-4 hover:border-cyan-300 hover:shadow-md transition-all group"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  {'image' in member && member.image ? (
-                    <div className="w-12 h-12 rounded-xl overflow-hidden border-2 border-cyan-500/30 shadow-xs">
-                      <img 
-                        src={member.image} 
-                        alt={member.name}
-                        className="w-full h-full object-cover object-top"
-                        referrerPolicy="no-referrer"
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center font-mono font-bold text-slate-800 text-sm border border-slate-200">
-                      {member.avatarInitials}
-                    </div>
-                  )}
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
+                  <div className="w-12 h-12 rounded-xl bg-slate-900 text-white flex flex-col items-center justify-center font-mono font-bold text-sm border border-slate-800 shadow-xs group-hover:scale-105 transition-transform">
+                    {member.avatarInitials === 'AA' && <span className="text-cyan-400 font-display font-bold">AA</span>}
+                    {member.avatarInitials === 'AP' && <span className="text-emerald-400 font-display font-bold">AP</span>}
+                    {member.avatarInitials === 'MC' && <span className="text-amber-400 font-display font-bold">MC</span>}
+                  </div>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 font-semibold">
                     {member.badge}
                   </span>
                 </div>
@@ -161,13 +140,27 @@ export const TeamView: React.FC<TeamViewProps> = ({ onSelectTab }) => {
                   <h4 className="font-display font-bold text-lg text-slate-900">
                     {member.name}
                   </h4>
-                  <div className="text-xs font-mono text-cyan-700 font-semibold">
+                  <div className="text-xs font-mono text-cyan-700 font-semibold mt-0.5">
                     {member.role}
                   </div>
-                  <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+                  <p className="text-xs text-slate-600 mt-2.5 leading-relaxed">
                     {member.bio}
                   </p>
                 </div>
+
+                {'portfolio' in member && member.portfolio && (
+                  <div className="pt-2">
+                    <a
+                      href={member.portfolio}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-50 hover:bg-cyan-100 text-cyan-800 border border-cyan-200 text-xs font-mono font-semibold transition-colors group/link"
+                    >
+                      <span>View Portfolio</span>
+                      <ExternalLink className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform text-cyan-600" />
+                    </a>
+                  </div>
+                )}
               </div>
 
               <div className="pt-3 border-t border-slate-100 text-[11px] font-mono text-slate-500">

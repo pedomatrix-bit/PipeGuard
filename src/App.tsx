@@ -7,6 +7,7 @@ import { ResearchView } from './components/ResearchView';
 import { TeamView } from './components/TeamView';
 import { DashboardView } from './components/DashboardView';
 import { NextView } from './components/NextView';
+import { InspireManakModal } from './components/InspireManakModal';
 
 const INITIAL_SENSORS: SensorNode[] = [
   {
@@ -68,6 +69,7 @@ export default function App() {
   const [currentScenario, setCurrentScenario] = useState<SimulationScenario>('normal');
   const [selectedSensorId, setSelectedSensorId] = useState<string>('PG-03');
   const [sensors, setSensors] = useState<SensorNode[]>(INITIAL_SENSORS);
+  const [isInspireModalOpen, setIsInspireModalOpen] = useState<boolean>(false);
 
   // Dynamic simulation engine based on scenario
   useEffect(() => {
@@ -243,8 +245,18 @@ export default function App() {
 
       {/* Site-wide formal academic Footer (Hidden in Dashboard) */}
       {currentTab !== 'dashboard' && (
-        <Footer onSelectTab={handleTabChange} />
+        <Footer
+          onSelectTab={handleTabChange}
+          onOpenInspireBrief={() => setIsInspireModalOpen(true)}
+        />
       )}
+
+      {/* In-page INSPIRE-MANAK Brief Modal */}
+      <InspireManakModal
+        isOpen={isInspireModalOpen}
+        onClose={() => setIsInspireModalOpen(false)}
+        onSelectTab={handleTabChange}
+      />
     </div>
   );
 }

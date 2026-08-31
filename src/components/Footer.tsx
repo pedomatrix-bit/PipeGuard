@@ -5,9 +5,10 @@ import { PipeGuardLogo } from './PipeGuardLogo';
 
 interface FooterProps {
   onSelectTab: (tab: TabType) => void;
+  onOpenInspireBrief?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onSelectTab }) => {
+export const Footer: React.FC<FooterProps> = ({ onSelectTab, onOpenInspireBrief }) => {
   return (
     <footer className="bg-slate-900 text-slate-300 border-t border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -85,20 +86,32 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTab }) => {
             </ul>
           </div>
 
-          {/* Research Spec Summary */}
+          {/* Research Spec Summary & INSPIRE-MANAK Action */}
           <div>
             <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400 mb-3">
               Research Details
             </h4>
-            <div className="space-y-2 text-xs font-mono text-slate-400">
+            <div className="space-y-2.5 text-xs font-mono text-slate-400">
               <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-800">
                 <div className="text-slate-200 font-medium">Affan Adil</div>
                 <div className="text-[11px] text-slate-400">Student Researcher / Innovator</div>
               </div>
-              <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-800">
-                <div className="text-slate-200 font-medium">Status: Prototype Stage</div>
-                <div className="text-[11px] text-slate-400">Lab loop calibration active</div>
-              </div>
+              <button
+                type="button"
+                onClick={onOpenInspireBrief}
+                className="w-full text-left p-3 rounded-lg bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/30 hover:border-amber-400 text-slate-200 hover:text-white transition-all group cursor-pointer"
+              >
+                <div className="flex items-center justify-between font-medium text-amber-300 group-hover:text-amber-200">
+                  <div className="flex items-center gap-1.5 font-sans font-bold text-xs tracking-wide">
+                    <Award className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                    <span>INSPIRE-MANAK Brief</span>
+                  </div>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-amber-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </div>
+                <div className="text-[11px] text-slate-400 mt-1 font-mono">
+                  Click to open project scope &amp; pillars
+                </div>
+              </button>
             </div>
           </div>
         </div>

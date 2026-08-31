@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TabType, SimulationScenario, SensorNode } from '../types';
 import { SYSTEM_INFO, PROBLEM_CARDS, INNOVATION_PILLARS, RESEARCH_OVERVIEW } from '../data/researchData';
 import { PipeDiagram3D } from './PipeDiagram3D';
 import { HowItWorksFlow } from './HowItWorksFlow';
 import { PipeGuardLogo } from './PipeGuardLogo';
+import { TourModal } from './TourModal';
 import { 
   ArrowRight, 
   Activity, 
@@ -21,7 +22,9 @@ import {
   Clock,
   Radio,
   Layers,
-  ChevronRight
+  ChevronRight,
+  Presentation,
+  Play
 } from 'lucide-react';
 
 interface HomeViewProps {
@@ -37,6 +40,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
   sensors,
   onTriggerScenario,
 }) => {
+  const [isTourOpen, setIsTourOpen] = useState<boolean>(false);
   const leadSensor = sensors.find((s) => s.id === 'PG-03') || sensors[0];
   const isLeaking = currentScenario === 'small-leak' || currentScenario === 'large-leak';
 
@@ -111,13 +115,18 @@ export const HomeView: React.FC<HomeViewProps> = ({
               </button>
 
               <button
-                id="hero-open-dashboard-btn"
-                onClick={() => onSelectTab('dashboard')}
-                className="px-5 py-3 rounded-xl bg-cyan-600 text-white hover:bg-cyan-700 font-semibold text-sm transition-all shadow-sm flex items-center gap-2 cursor-pointer active:scale-95"
+                id="hero-take-tour-btn"
+                onClick={() => setIsTourOpen(true)}
+                className="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold text-sm transition-all shadow-md flex items-center gap-2.5 cursor-pointer active:scale-95 group border border-cyan-400/30"
               >
-                <Activity className="w-4 h-4" />
-                <span>Open Dashboard</span>
-                <span className="text-xs font-mono opacity-80">→</span>
+                <div className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <Play className="w-3.5 h-3.5 fill-current text-white" />
+                </div>
+                <div className="text-left">
+                  <div className="text-xs font-bold leading-tight">Take the 2-minute tour</div>
+                  <div className="text-[10px] font-mono text-cyan-200 leading-tight">Interactive PPT Slideshow</div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-cyan-200 group-hover:translate-x-0.5 transition-transform" />
               </button>
             </div>
 
@@ -443,6 +452,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         </div>
       </section>
+
+      {/* 2-Minute Interactive PPT Tour Slide Shower Modal */}
+      <TourModal
+        isOpen={isTourOpen}
+        onClose={() => setIsTourOpen(false)}
+        onSelectTab={onSelectTab}
+      />
     </div>
   );
 };
