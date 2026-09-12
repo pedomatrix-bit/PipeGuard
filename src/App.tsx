@@ -8,7 +8,6 @@ import { TeamView } from './components/TeamView';
 import { DashboardView } from './components/DashboardView';
 import { NextView } from './components/NextView';
 import { InspireManakModal } from './components/InspireManakModal';
-import { CustomCursor } from './components/CustomCursor';
 import { AcousticPreloader } from './components/AcousticPreloader';
 
 const INITIAL_SENSORS: SensorNode[] = [
@@ -245,9 +244,6 @@ export default function App() {
           <NextView onSelectTab={handleTabChange} />
         )}
       </main>
-
-      {/* Custom Precision Acoustic Cursor with Trail & Magnetic Physics */}
-      <CustomCursor />
 
       {/* Project-Themed Acoustic Diagnostic Preloader */}
       {isPreloading && (
