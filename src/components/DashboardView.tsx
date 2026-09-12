@@ -10,7 +10,6 @@ import { DashboardSidebar, DashboardSection } from './DashboardSidebar';
 import { DashboardHeader } from './DashboardHeader';
 import { DashboardTrendCharts } from './DashboardTrendCharts';
 import { InteractiveLeakLab } from './InteractiveLeakLab';
-import { TDOAVisualIndicator } from './TDOAVisualIndicator';
 import { 
   Droplets, 
   Activity, 
@@ -289,13 +288,6 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
               {/* 📈 TWO DYNAMIC TREND CHARTS IN WATER BLUE */}
               <DashboardTrendCharts scenario={scenario} />
-
-              {/* ⏱️ TDOA DUAL-SENSOR ARRIVAL INDICATOR (HIGHLIGHTS WHEN LEAK SCENARIO IS ACTIVE) */}
-              <TDOAVisualIndicator 
-                sensors={sensors} 
-                scenario={scenario} 
-                onSelectScenario={onSelectScenario} 
-              />
             </div>
           )}
 
@@ -335,12 +327,6 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 onSelectSensor={onSelectSensor}
                 scenario={scenario}
                 onTriggerScenario={onSelectScenario}
-              />
-
-              <TDOAVisualIndicator 
-                sensors={sensors} 
-                scenario={scenario} 
-                onSelectScenario={onSelectScenario} 
               />
 
               <VibrationWaveform

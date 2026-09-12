@@ -6,9 +6,14 @@ import { PipeGuardLogo } from './PipeGuardLogo';
 interface FooterProps {
   onSelectTab: (tab: TabType) => void;
   onOpenInspireBrief?: () => void;
+  onReplayPreloader?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onSelectTab, onOpenInspireBrief }) => {
+export const Footer: React.FC<FooterProps> = ({ 
+  onSelectTab, 
+  onOpenInspireBrief,
+  onReplayPreloader 
+}) => {
   return (
     <footer className="bg-slate-900 text-slate-300 border-t border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -112,6 +117,20 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTab, onOpenInspireBrief 
                   Click to open project scope &amp; pillars
                 </div>
               </button>
+
+              {onReplayPreloader && (
+                <button
+                  type="button"
+                  onClick={onReplayPreloader}
+                  className="w-full text-left px-3 py-2 rounded-lg bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 hover:border-cyan-500/40 text-slate-300 hover:text-cyan-300 transition-all flex items-center justify-between group cursor-pointer text-[11px] font-mono"
+                >
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 group-hover:animate-ping" />
+                    <span>Replay Calibration Sequence</span>
+                  </span>
+                  <span className="text-[10px] text-slate-500 group-hover:text-cyan-400">0–100%</span>
+                </button>
+              )}
             </div>
           </div>
         </div>

@@ -52,10 +52,6 @@ export const InteractiveLeakLab: React.FC = () => {
   const [solenoidOpen, setSolenoidOpen] = useState<boolean>(true);
   const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
   const [autoIsolateEnabled, setAutoIsolateEnabled] = useState<boolean>(true);
-  
-  // Customizable pair for TDOA analysis in the lab
-  const [labSensorA, setLabSensorA] = useState<string>('PG-02');
-  const [labSensorB, setLabSensorB] = useState<string>('PG-03');
 
   // Sensor node fixed coordinates along the 5.0-meter pipe
   const sensorNodes = [
@@ -137,39 +133,6 @@ export const InteractiveLeakLab: React.FC = () => {
       confidencePercent,
     };
   }, [leakPosition, sensorCalculations, selectedMaterial, isLeaking]);
-
-  // Two-Sensor TDOA calculation for arbitrary selected sensor pair in lab
-  const labTDOA = useMemo(() => {
-    const nodeA = sensorNodes.find((s) => s.id === labSensorA) || sensorNodes[1];
-    const nodeB = sensorNodes.find((s) => s.id === labSensorB) || sensorNodes[2];
-
-    const distA = Math.abs(leakPosition - nodeA.x);
-    const distB = Math.abs(leakPosition - nodeB.x);
-
-    const timeA_ms = isLeaking ? (distA / selectedMaterial.speedOfSound) * 1000 : 0;
-    const timeB_ms = isLeaking ? (distB / selectedMaterial.speedOfSound) * 1000 : 0;
-
-    const deltaT_ms = isLeaking ? +(timeB_ms - timeA_ms).toFixed(4) : 0;
-    const absDeltaT_ms = Math.abs(deltaT_ms);
-
-    const calculatedPos = isLeaking && nodeA.id !== nodeB.id
-      ? +(((nodeA.x + nodeB.x) / 2) - ((selectedMaterial.speedOfSound * (deltaT_ms / 1000)) / 2)).toFixed(2)
-      : 0;
-
-    return {
-      nodeA,
-      nodeB,
-      distA: +distA.toFixed(2),
-      distB: +distB.toFixed(2),
-      timeA_ms: +timeA_ms.toFixed(3),
-      timeB_ms: +timeB_ms.toFixed(3),
-      deltaT_ms,
-      absDeltaT_ms: +absDeltaT_ms.toFixed(3),
-      calculatedPos,
-      firstNode: timeA_ms <= timeB_ms ? nodeA : nodeB,
-      secondNode: timeA_ms <= timeB_ms ? nodeB : nodeA,
-    };
-  }, [labSensorA, labSensorB, sensorNodes, leakPosition, isLeaking, selectedMaterial]);
 
   // Trigger auto-isolation if leak is critical
   useEffect(() => {
@@ -552,107 +515,35 @@ export const InteractiveLeakLab: React.FC = () => {
               <div className="flex items-center gap-2">
                 <Activity className="w-4 h-4 text-sky-600" />
                 <h3 className="font-display font-bold text-base text-slate-900">
-                  TDOA Spatial Pinpoint &amp; Comparison
+                  TDOA Spatial Pinpoint
                 </h3>
               </div>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-sky-50 text-sky-700 border border-sky-200">
-                Δt Millisecond Engine
+                Cross-Correlation
               </span>
             </div>
 
-            {/* Two-Sensor Selector for TDOA comparison */}
-            <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-              <div className="text-[10px] font-mono font-bold text-slate-500 uppercase flex items-center justify-between">
-                <span>Select 2 Sensor Nodes for TDOA:</span>
-                <span className="text-sky-700 font-bold">{labSensorA} vs {labSensorB}</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <div className="text-[9px] font-mono text-slate-400 mb-1">Sensor Node A:</div>
-                  <div className="grid grid-cols-4 gap-1">
-                    {sensorNodes.map((s) => (
-                      <button
-                        key={`a-${s.id}`}
-                        type="button"
-                        onClick={() => setLabSensorA(s.id)}
-                        className={`py-1 rounded-lg text-[10px] font-mono font-bold border transition-all cursor-pointer ${
-                          labSensorA === s.id
-                            ? 'bg-sky-600 text-white border-sky-700 shadow-2xs'
-                            : 'bg-white text-slate-700 hover:bg-slate-100 border-slate-200'
-                        }`}
-                      >
-                        {s.id.split('-')[1]}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <div className="text-[9px] font-mono text-slate-400 mb-1">Sensor Node B:</div>
-                  <div className="grid grid-cols-4 gap-1">
-                    {sensorNodes.map((s) => (
-                      <button
-                        key={`b-${s.id}`}
-                        type="button"
-                        onClick={() => setLabSensorB(s.id)}
-                        className={`py-1 rounded-lg text-[10px] font-mono font-bold border transition-all cursor-pointer ${
-                          labSensorB === s.id
-                            ? 'bg-sky-600 text-white border-sky-700 shadow-2xs'
-                            : 'bg-white text-slate-700 hover:bg-slate-100 border-slate-200'
-                        }`}
-                      >
-                        {s.id.split('-')[1]}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Calculated Pinpoint & TDOA Outcome Card */}
-            <div className="p-4 rounded-2xl bg-sky-50/80 border border-sky-200 space-y-2.5">
+            {/* Calculated Pinpoint Outcome Card */}
+            <div className="p-4 rounded-2xl bg-sky-50/70 border border-sky-200 space-y-2">
               <div className="flex justify-between items-start">
                 <div>
                   <div className="text-[10px] font-mono font-bold text-sky-700 uppercase tracking-wider">
-                    Calculated TDOA (Δt)
+                    Calculated Leak Coordinate
                   </div>
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="font-display font-extrabold text-2xl text-slate-900">
-                      {isLeaking ? `${labTDOA.deltaT_ms > 0 ? '+' : ''}${labTDOA.deltaT_ms}` : '0.000'}
-                    </span>
-                    <span className="font-mono text-xs font-bold text-sky-700">ms</span>
+                  <div className="font-display font-bold text-2xl text-slate-900">
+                    {isLeaking ? `${bracketPair.calculatedLocation.toFixed(2)} m` : 'No Active Leak'}
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-[10px] font-mono text-slate-500">Pinpoint Target</div>
+                  <div className="text-[10px] font-mono text-slate-500">Margin of Error</div>
                   <div className="font-mono font-bold text-xs text-sky-800">
-                    {isLeaking ? `${bracketPair.calculatedLocation.toFixed(2)} m (±${bracketPair.localizationErrorCm}cm)` : 'No Active Leak'}
+                    ±{bracketPair.localizationErrorCm} cm
                   </div>
-                </div>
-              </div>
-
-              {/* Arrival Timeline Bar for Selected Pair */}
-              <div className="space-y-1 pt-1">
-                <div className="flex justify-between text-[10px] font-mono text-slate-600">
-                  <span>{labSensorA}: {isLeaking ? `${labTDOA.timeA_ms} ms (${labTDOA.distA}m)` : '0.0ms'}</span>
-                  <span>{labSensorB}: {isLeaking ? `${labTDOA.timeB_ms} ms (${labTDOA.distB}m)` : '0.0ms'}</span>
-                </div>
-                <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden flex">
-                  <div
-                    style={{ width: isLeaking ? `${Math.min(100, Math.max(10, (labTDOA.timeA_ms / 3.0) * 100))}%` : '5%' }}
-                    className="h-full bg-sky-600 transition-all duration-300 rounded-l-full"
-                    title={`${labSensorA} arrival time: ${labTDOA.timeA_ms}ms`}
-                  />
-                  <div
-                    style={{ width: isLeaking ? `${Math.min(100, Math.max(10, (labTDOA.timeB_ms / 3.0) * 100))}%` : '5%' }}
-                    className="h-full bg-cyan-400 transition-all duration-300 rounded-r-full"
-                    title={`${labSensorB} arrival time: ${labTDOA.timeB_ms}ms`}
-                  />
                 </div>
               </div>
 
               {/* Confidence Bar */}
-              <div className="space-y-1 pt-0.5">
+              <div className="space-y-1 pt-1">
                 <div className="flex justify-between text-[10px] font-mono text-slate-600">
                   <span>Localization Confidence</span>
                   <span className="font-bold text-sky-700">{bracketPair.confidencePercent}%</span>
@@ -667,16 +558,19 @@ export const InteractiveLeakLab: React.FC = () => {
             </div>
 
             {/* TDOA Equation & Time Delay Breakdown */}
-            <div className="space-y-1.5 text-xs font-mono">
+            <div className="space-y-2 text-xs font-mono">
               <div className="flex justify-between p-2 rounded-xl bg-slate-50 border border-slate-100">
-                <span className="text-slate-500">Selected Pair ({labSensorA} &amp; {labSensorB}):</span>
-                <span className="font-bold text-slate-800">
-                  Δt = {labTDOA.absDeltaT_ms} ms ({labTDOA.firstNode.id} first)
-                </span>
+                <span className="text-slate-500">Bracketing Sensors:</span>
+                <span className="font-bold text-slate-800">{bracketPair.sLeft.id} &amp; {bracketPair.sRight.id}</span>
               </div>
 
               <div className="flex justify-between p-2 rounded-xl bg-slate-50 border border-slate-100">
-                <span className="text-slate-500">Wave Velocity in {selectedMaterial.name.split(' ')[0]}:</span>
+                <span className="text-slate-500">Time Delay (Δt):</span>
+                <span className="font-bold text-sky-700">{bracketPair.deltaT_ms > 0 ? `+${bracketPair.deltaT_ms}` : bracketPair.deltaT_ms} ms</span>
+              </div>
+
+              <div className="flex justify-between p-2 rounded-xl bg-slate-50 border border-slate-100">
+                <span className="text-slate-500">Wave Velocity (c):</span>
                 <span className="font-bold text-slate-800">{selectedMaterial.speedOfSound} m/s</span>
               </div>
             </div>

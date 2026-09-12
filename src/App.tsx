@@ -8,6 +8,8 @@ import { TeamView } from './components/TeamView';
 import { DashboardView } from './components/DashboardView';
 import { NextView } from './components/NextView';
 import { InspireManakModal } from './components/InspireManakModal';
+import { CustomCursor } from './components/CustomCursor';
+import { AcousticPreloader } from './components/AcousticPreloader';
 
 const INITIAL_SENSORS: SensorNode[] = [
   {
@@ -70,6 +72,7 @@ export default function App() {
   const [selectedSensorId, setSelectedSensorId] = useState<string>('PG-03');
   const [sensors, setSensors] = useState<SensorNode[]>(INITIAL_SENSORS);
   const [isInspireModalOpen, setIsInspireModalOpen] = useState<boolean>(false);
+  const [isPreloading, setIsPreloading] = useState<boolean>(true);
 
   // Dynamic simulation engine based on scenario
   useEffect(() => {
@@ -243,11 +246,20 @@ export default function App() {
         )}
       </main>
 
+      {/* Custom Precision Acoustic Cursor with Trail & Magnetic Physics */}
+      <CustomCursor />
+
+      {/* Project-Themed Acoustic Diagnostic Preloader */}
+      {isPreloading && (
+        <AcousticPreloader onComplete={() => setIsPreloading(false)} />
+      )}
+
       {/* Site-wide formal academic Footer (Hidden in Dashboard) */}
       {currentTab !== 'dashboard' && (
         <Footer
           onSelectTab={handleTabChange}
           onOpenInspireBrief={() => setIsInspireModalOpen(true)}
+          onReplayPreloader={() => setIsPreloading(true)}
         />
       )}
 
